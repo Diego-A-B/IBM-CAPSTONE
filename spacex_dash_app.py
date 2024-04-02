@@ -37,7 +37,7 @@ html.Br(),
 # TASK 2: Add a pie chart to show the total successful launches count for all sites
 # If a specific launch site was selected, show the Success vs. Failed counts for the site
 html.Div(dcc.Graph(id='success-pie-chart')),
-                                html.Br(),
+html.Br(),
 # TASK 3: Add a slider to select payload range
 #dcc.RangeSlider(id='payload-slider',...)
 dcc.RangeSlider(id='payload-slider',
@@ -46,7 +46,8 @@ dcc.RangeSlider(id='payload-slider',
                        100: '100'},
                 value=[min_payload, max_payload]),
                            
-html.Div(dcc.Graph(id='success-payload-scatter-chart'))
+html.Div(dcc.Graph(id='success-payload-scatter-chart')),
+html.Br()
 ])
 
 @app.callback(Output(component_id='success-pie-chart', component_property='figure'),
@@ -79,7 +80,8 @@ def scatter(entered_site,payload):
         fig=px.scatter(filtered_df,x='Payload Mass (kg)',y='Class',color='Booster Version Category',title='Success count on Payload mass for all sites')
         return fig
     else:
-        fig=px.scatter(filtered_df[filtered_df['Launch Site']==entered_site],x='Payload Mass (kg)',y='Class',color='Booster Version Category',title=f"Success count on Payload mass for site {entered_site}")
+        fig=px.scatter(filtered_df[filtered_df['Launch Site']==entered_site],x='Payload Mass (kg)',y='Class',color='Booster Version Category',
+          title=f"Success count on Payload mass for site {entered_site}")
         return fig
 
 # Run the app
